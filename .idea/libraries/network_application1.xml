@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="network-application1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/production/network-application/jcommon-1.0.23.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/network-application/jfreechart-1.0.19.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

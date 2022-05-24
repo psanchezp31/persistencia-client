@@ -50,21 +50,6 @@ public class UpdateChartActionListenerImpl implements ActionListener {
 
     }
 
-    private void ListenLocalAndDrawChart() {
-
-        try {
-            cpuUsageService = new LocalCpuUsageServiceImpl();
-            while (true) {
-                Thread.sleep(1000);
-                XYDataset dataSetFromCpuData = createDataSetFromCpuData(cpuUsageService.loadAndGetCpuData());
-                chart.getXYPlot().setDataset(dataSetFromCpuData);
-            }
-        } catch (InterruptedException x) {
-            System.out.println("Chart drawing process interrupted.");
-        }
-
-    }
-
     private void ListenSocketAndDrawChart() {
 
         String ip = ipTextField.getText();

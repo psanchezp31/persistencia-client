@@ -21,36 +21,66 @@ public class Frame extends JFrame {
 
     private static JPanel mainPanel;
     private final JPanel topPanel;
+    private final JPanel middlePanel;
     private final JLabel ipLabel;
     private final JTextField ipTextField;
+    private final JLabel portLabel;
+    private final JTextField portTextField;
+    private final JLabel nameLabel;
+    private final JTextField nameTextField;
     private final JButton connectButton;
-    private final ChartPanel chartPanel;
-    private final JFreeChart chart;
-    private final UpdateChartActionListenerImpl listenerService;
+    private final JLabel imageLabel;
+    private ImageIcon imageLiveChat;
+//    private final UpdateChartActionListenerImpl listenerService;
     private XYLineAndShapeRenderer renderer;
     private XYPlot plot;
 
     public Frame(final String title) {
         super(title);
         setSystemLookAndFeel();
-        ipLabel = new JLabel("IP: ");
+
+        ipLabel = new JLabel("IP Server: ");
         ipTextField = new JTextField(20);
+        ipLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ipTextField.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        portLabel = new JLabel("Port: ");
+        portTextField = new JTextField(20);
+
+        nameLabel = new JLabel("Your name: ");
+        nameTextField = new JTextField(20);
+
         connectButton = new JButton("Connect");
+
+        imageLiveChat = new ImageIcon(this.getClass().getResource("/gui/images/live_chat.png"));
+        Image getImage = imageLiveChat.getImage();
+        Image imgScale = getImage.getScaledInstance(600, 400, Image.SCALE_DEFAULT);
+        ImageIcon scaledImage = new ImageIcon(imgScale);
+
+        imageLabel = new JLabel();
+        imageLabel.setSize(600, 600);
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        imageLabel.setIcon(scaledImage);
+
         topPanel = new JPanel();
         topPanel.add(ipLabel);
         topPanel.add(ipTextField);
+        topPanel.add(portLabel);
+        topPanel.add(portTextField);
+        topPanel.add(nameLabel);
+        topPanel.add(nameTextField);
         topPanel.add(connectButton);
-        chart = createChart(new XYSeriesCollection());
-        chartPanel = new ChartPanel(chart);
-        chartPanel.setSize(560, 370);
-        chartPanel.setMouseZoomable(true, false);
+
+        middlePanel = new JPanel();
+        middlePanel.add(imageLabel);
+
         mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(chartPanel, BorderLayout.CENTER);
+        mainPanel.add(middlePanel, BorderLayout.CENTER);
         this.setContentPane(mainPanel);
-        listenerService = new UpdateChartActionListenerImpl(ipTextField, connectButton, chart);
-        connectButton.addActionListener(listenerService);
+        //listenerService = new UpdateChartActionListenerImpl(ipTextField, connectButton);
+        //connectButton.addActionListener(listenerService);
     }
 
     public static void main(String[] args) {
@@ -62,37 +92,6 @@ public class Frame extends JFrame {
             window.setVisible(true);
             window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
-    }
-
-    private JFreeChart createChart(XYDataset dataset) {
-
-        JFreeChart chart = ChartFactory.createXYLineChart(
-                "Remote CPU Usage",
-                "Time (seconds)",
-                "% Utilization",
-                dataset,
-                PlotOrientation.VERTICAL,
-                true,
-                true,
-                false
-        );
-
-        renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesPaint(0, Color.green);
-        renderer.setSeriesStroke(0, new BasicStroke(2.0f));
-
-        plot = chart.getXYPlot();
-        plot.setRenderer(renderer);
-        plot.setBackgroundPaint(Color.BLACK);
-        plot.setRangeGridlinesVisible(true);
-        plot.setRangeGridlinePaint(Color.LIGHT_GRAY);
-        plot.setDomainGridlinesVisible(true);
-        plot.setDomainGridlinePaint(Color.LIGHT_GRAY);
-
-        chart.getLegend().setFrame(BlockBorder.NONE);
-        chart.setTitle(new TextTitle("Remote CPU Usage", new Font("Sans-Serif", java.awt.Font.BOLD, 18)));
-
-        return chart;
     }
 
     private void setSystemLookAndFeel() {

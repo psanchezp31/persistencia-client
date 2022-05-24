@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="network-application">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/artifacts/network_application_jar/network-application.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
